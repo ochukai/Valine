@@ -3,9 +3,25 @@ var md = require('marked');
 var xss = require('xss');
 var crypto = require('blueimp-md5');
 
-var GRAVATAR_BASE_URL = 'https://gravatar.loli.net/avatar/';
-var DEFAULT_EMAIL_HASH = '9e63c80900d106cbbec5a9f4ea433a3e';
+var VERSION = require('../package.json').version;
+var LINKREG = /^https?\:\/\//;
 
+var DEFAULT_EMAIL_HASH = crypto('ochukai@ochukai.com');
+
+var _avatarSetting = {
+  cdn: 'https://gravatar.loli.net/avatar/',
+  ds: [
+    'mp',
+    'identicon',
+    'monsterid',
+    'wavatar',
+    'robohash',
+    'retro',
+    ''
+  ],
+  params: '',
+  hide: false
+};
 
 var defaultComment = {
   ip: '',
@@ -50,6 +66,21 @@ class Valine {
     let _root = this;
     let av = option.av || AV;
 
+    let avatar = option.avatar;
+    let avatarForce  = option.avatarForce;
+    let avatar_cdn  = option.avatar_cdn;
+
+    let ds = _avatarSetting['ds'];
+    let force = avatarForce
+      ? '&q=' + Math.random().toString(32).substring(2)
+      : '';
+
+    _avatarSetting['params'] = `?size=80&d=${(ds.indexOf(avatar) > -1 ? avatar : 'mp')}&v=${VERSION}${force}`;
+    _avatarSetting['hide'] = avatar === 'hide' ? true : false;
+    _avatarSetting['cdn'] = LINKREG.test(avatar_cdn)
+      ? avatar_cdn
+      : _avatarSetting['cdn'];
+
     // disable_av_init = option.disable_av_init || false;
     defaultComment['url'] = option.pathname || location.pathname.replace(/\/$/, '');
     try {
@@ -68,7 +99,7 @@ class Valine {
         <div class="vwrap">
           <div class="textarea-wrapper">
             <div class="comment_trigger">
-              <div class="avatar"><img class="visitor_avatar" src="${GRAVATAR_BASE_URL + DEFAULT_EMAIL_HASH + '?size=80'}"></div>
+              <div class="avatar"><img class="visitor_avatar" src="${_avatarSetting['cdn'] + DEFAULT_EMAIL_HASH + _avatarSetting['params']}"></div>
               <div class="trigger_title">${placeholder}</div>
             </div>
             <div class="veditor-area">
@@ -93,9 +124,7 @@ class Valine {
         </div>
         <div class="info">
             <div class="col">已有 <span class="count">0</span> 条评论</div>
-            <div class="col power float-right">
-                <a href="https://segmentfault.com/markdown" target="_blank"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z"></path></svg></a>
-            </div>
+            <div class="col power float-right"></div>
         </div>
         <div class="vsubmitting" style="display:none;"></div>
         <ul class="vlist"><li class="vempty"></li></ul>
@@ -252,6 +281,7 @@ class Valine {
         textField.value += tag;
         textField.focus()
       }
+
       defaultComment["comment"] = textField.value;
       let submitBtn = _root.el.querySelector('.vsubmit');
       if (submitBtn.getAttribute('disabled')) submitBtn.removeAttribute('disabled');
@@ -327,9 +357,9 @@ class Valine {
       let _vcard = document.createElement('li');
       _vcard.setAttribute('class', 'vcard');
       _vcard.setAttribute('id', ret.id);
+
       let emailHash = ret.get('emailHash')
-      let gravatar_url = GRAVATAR_BASE_URL + emailHash
-        + '?size=80&d=https%3a%2f%2fgravatar.loli.net%2favatar%2f9e63c80900d106cbbec5a9f4ea433a3e.jpg%3fsize%3d80';
+      let gravatar_url = _avatarSetting['cdn'] + emailHash + _avatarSetting['params'];
 
       // language=HTML
       _vcard.innerHTML = `
@@ -398,12 +428,14 @@ class Valine {
           _root.el.querySelector(`.v${k}`).value = s[k];
           defaultComment[k] = s[k];
         }
+
         if (s['mail'] != '') {
           let el = _root.el.querySelector('.visitor_avatar');
-          el.setAttribute('src', GRAVATAR_BASE_URL + crypto(s['mail'].toLowerCase().trim()) + '?size=80&d=https%3a%2f%2fgravatar.loli.net%2favatar%2f9e63c80900d106cbbec5a9f4ea433a3e.jpg%3fsize%3d80');
+          el.setAttribute('src', _avatarSetting['cdn'] + crypto(s['mail'].toLowerCase().trim()) + _avatarSetting['params']);
         }
       }
     }
+
     getCache();
 
     // reset form
@@ -734,7 +766,7 @@ const loadJS = function (url, success) {
       this.onload = this.onreadystatechange = null;
     }
   };
-  
+
   document.getElementsByTagName('head')[0].appendChild(domScript);
 };
 

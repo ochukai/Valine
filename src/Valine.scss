@@ -1,7 +1,7 @@
 .valine {
   * {
     box-sizing: border-box;
-    // font-family: PingFang SC,Lantinghei SC,Helvetica Neue,Helvetica,Arial,Microsoft YaHei,STHeitiSC-Light,simsun,WenQuanYi Zen Hei,WenQuanYi Micro Hei,"sans-serif";
+    font-family: PingFang SC,Lantinghei SC,Helvetica Neue,Helvetica,Arial,Microsoft YaHei,STHeitiSC-Light,simsun,WenQuanYi Zen Hei,WenQuanYi Micro Hei,"sans-serif";
     font-size: 14px;
     font-weight: normal;
     line-height: 1.42857143;
@@ -10,18 +10,35 @@
     margin: initial;
     padding: initial;
   }
+
   .vemoticon-img {
     display: inline-block;
     max-height: 32px;
     margin: 0 2px;
   }
+
   .vwrap {
     overflow: hidden;
     position: relative;
     border: 1px solid #ededed;
+
     .veditor-area {
       position: inherit;
+      padding-bottom: 18px;
+
+      .vpreview-btn,
+      .vemoji-btn {
+        font-size: 12px;
+        cursor: pointer;
+        color: #888;
+        margin-left: 5px;
+
+        &:hover {
+          color: #333;
+        }
+      }
     }
+
     .btn-wrap {
       position: absolute !important;
       right: 1.5em;
@@ -42,23 +59,33 @@
     }
 
     .vextra-area {
-      margin: 0.4em 0 0.4em 0.5em;
+      margin: 0.5em 0 0.4em 0.5em;
 
       .vsmile-icons {
         padding: 0.2em 0;
         border-top: 1px solid #ededed;
         border-radius: 0;
         margin: 0.3em 0;
-        max-height: 64px;
+        // max-height: 64px;
         overflow: auto;
+
         img {
           display: inline-block;
           width: auto !important;
-          height: 28px !important;
-          margin-right: 4px;
+          height: 50px !important;
+          margin-right: 8px;
+          box-sizing: border-box;
+          padding: 5px;
+          border-radius: 4px;
           cursor: pointer;
+          transition: all 0.3s;
+
+          &:hover {
+            background: #f0f0f0;
+          }
         }
       }
+
       .vpreview-text {
         border-top: 1px solid #ededed;
         border-radius: 0;
@@ -68,6 +95,7 @@
         overflow: auto;
       }
     }
+
     .textarea-wrapper {
       color: #4b5b62;
       width: 100%;
@@ -115,6 +143,7 @@
         resize: none;
         min-height: 6em;
         margin: 0;
+
         &:focus {
           border-color: #c4c8cb;
           outline: 0;
@@ -169,7 +198,8 @@
           font-weight: bolder;
           border-radius: 30px;
           border: 1px solid #e9eff3;
-          background-color: #111;
+          background-color: #399c9c;
+          cursor: pointer;
           padding: 0.4em 0.5em;
           -webkit-appearance: none;
           -moz-appearance: none;
@@ -181,7 +211,7 @@
           font-size: 1em !important;
         }
         button:hover {
-          background-color: #444;
+          background-color: #40afaf;
         }
       }
       @media screen and(max-width: 720px) {
@@ -296,6 +326,7 @@
   .vbtn:hover {
     border-color: #666;
   }
+
   .vpage {
     margin: 1.5em 0;
     .more {
@@ -310,42 +341,40 @@
     }
   }
   .vlist {
-    // border-top: 1px solid #dedede;
-    // border-bottom: 1px solid #dedede;
     width: 100%;
     list-style: none;
     margin: 0;
     padding: 0;
     .vcard {
-      padding: 2em 1.5em 2em;
+      padding: 1em 1.5em;
       border: 1px solid rgba(150, 150, 150, 0.18);
-      margin: 2em 0 0;
+      margin: 1em 0 0;
       list-style: none;
-      border-radius: 5px;
       word-break: break-all;
+
       &:hover {
         border: 1px solid rgba(150, 150, 150, 0.25);
       }
 
       &:hover .vat {
-        background: #111 !important;
+        background: #399c9c !important;
       }
+
       .vat {
-        margin: -2.1em 0 0;
+        margin: 0 0;
         float: right;
         background: transparent;
         color: #ffffff;
-        padding: 0.2em 1em;
-        line-height: 1.2;
+        padding: 0.3em 1.2em;
+        border-radius: 25px;
+        font-size: 12px;
+        line-height: 1.5;
         cursor: pointer;
         word-break: keep-all;
         white-space: nowrap;
         text-transform: uppercase;
       }
-      // padding: 8px 0;
-      // &+.vcard {
-      //     border-top: 1px solid #dedede;
-      // }
+
       .vavatar {
         margin-right: 1em;
         margin-top: 0.1em;
@@ -357,24 +386,29 @@
         top: 0;
         border-radius: 50%;
       }
+
       .vhead {
         line-height: 1;
         display: block;
-        margin-bottom: 1em;
+        // margin-bottom: 1em;
         position: relative;
+
         .vmeta-info {
           margin: 0 0 0 48px;
         }
+
         .vname {
           font-weight: bolder;
           font-size: 1em;
           color: rgba(0, 0, 0, 0.7);
         }
+
         .spacer {
           color: #ccc;
           margin-left: 0.3em;
           margin-right: 0.3em;
         }
+
         .vtime {
           color: #a9a4a4;
           display: inline-block;
@@ -382,6 +416,7 @@
           font-size: 90%;
         }
       }
+
       .text-wrapper {
         overflow: hidden;
         -webkit-box-sizing: border-box;
@@ -452,13 +487,16 @@
         }
       }
     }
+
     .vempty {
       padding: 20px;
       text-align: center;
       color: #999;
     }
   }
+
   /************ Loading ************/
+
   .spinner {
     margin: 10px auto;
     width: 50px;
