@@ -5,8 +5,7 @@
     "main": "/src/Valine.js",
     "author": {
         "name": "Deserts",
-        "url": "https://github.com/DesertsP",
-        "email": "i@gmail.com"
+        "url": "https://github.com/ochukai"
     },
     "scripts": {
         "test": "webpack",
@@ -24,12 +23,12 @@
     "license": "ISC",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/DesertsP/Valine.git"
+        "url": "git+https://github.com/ochukai/Valine.git"
     },
     "bugs": {
-        "url": "https://github.com/DesertsP/Valine/issues"
+        "url": "https://github.com/ochukai/Valine/issues"
     },
-    "homepage": "https://github.com/DesertsP/Valine#readme",
+    "homepage": "https://github.com/ochukai/Valine#readme",
     "devDependencies": {
         "autoprefixer": "^7.1.1",
         "babel-core": "^6.25.0",

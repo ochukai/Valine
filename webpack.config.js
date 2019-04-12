@@ -10,58 +10,58 @@ var BUILD_PATH = path.resolve(ROOT_PATH, 'dist');
 
 var plugins = [];
 if (env !== 'dev') {
-    plugins.push(
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true
-        })
-    );
+  plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true
+    })
+  );
 }
 
 module.exports = {
-    entry: './src/' + libraryName + '.js',
+  entry: './src/' + libraryName + '.js',
 
-    output: {
-        path: BUILD_PATH,
-        publicPath: "/dist/",
-        filename: libraryName + '.min.js',
-        library: libraryName,
-        libraryTarget: 'umd',
-        umdNamedDefine: true
-    },
+  output: {
+    path: BUILD_PATH,
+    publicPath: "/dist/",
+    filename: libraryName + '.min.js',
+    library: libraryName,
+    libraryTarget: 'umd',
+    umdNamedDefine: true
+  },
 
-    devtool: 'source-map',
+  devtool: 'source-map',
 
-    devServer: {
-        publicPath: "/dist/",
-        inline: true,
-        port: 8088
-    },
+  devServer: {
+    publicPath: "/dist/",
+    inline: true,
+    port: 8088
+  },
 
-    module: {
-        rules: [{
-                test: /\.js$/,
-                loader: 'babel-loader',
-                include: APP_PATH,
-                options: {
-                    presets: ['es2015']
-                }
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader'
-                ],
-                include: APP_PATH
-            },
-            {
-                test: /\.(png|jpg)$/,
-                loader: 'url-loader?limit=40000'
-            }
-        ]
-    },
+  module: {
+    rules: [{
+        test: /\.js$/,
+        loader: 'babel-loader',
+        include: APP_PATH,
+        options: {
+          presets: ['es2015']
+        }
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ],
+        include: APP_PATH
+      },
+      {
+        test: /\.(png|jpg)$/,
+        loader: 'url-loader?limit=40000'
+      }
+    ]
+  },
 
-    plugins: plugins
+  plugins: plugins
 };
